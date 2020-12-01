@@ -314,9 +314,12 @@ namespace Npgsql
 #pragma warning disable CS8625
         void Cleanup()
         {
-            Log.Debug("COPY operation ended", _connector.Id);
-            _connector.CurrentCopyOperation = null;
-            _connector = null;
+            if (_connector != null)
+            {
+                Log.Debug("COPY operation ended", _connector.Id);
+                _connector.CurrentCopyOperation = null;
+                _connector = null;  
+            }
             _readBuf = null;
             _writeBuf = null;
             _isDisposed = true;
